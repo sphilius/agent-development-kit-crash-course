@@ -1,0 +1,48 @@
+version: '3.8' # Specifies the Docker Compose file format version
+
+services:
+  agent: # Defines a service named 'agent'
+    build:
+      context: . # Uses the Dockerfile in the current directory
+      dockerfile: Dockerfile
+    image: auhdhd_rag_agent_image # Names the image that will be built
+    
+    env_file:
+      - .env # Loads environment variables from the .env file in the project root
+    
+    ports:
+      # Maps port 8080 on the host to port 8080 in the container
+      # This is for the web application (app.py)
+      # Ensure app.py is configured to run on port 8080 (e.g., via FLASK_RUN_PORT in .env)
+      - "8080:8080" 
+    
+    # By default, uses the CMD from the Dockerfile (which is `python main.py`)
+    # To run other commands:
+    # docker-compose run --rm agent python ingest_cloud.py
+    # docker-compose run --rm agent python app.py (if CMD in Dockerfile is main.py)
+    # or define separate services or command overrides if preferred.
+
+    # Optional: Mount the current directory into the container for live code changes during development
+    # For production, you might remove this to use the code baked into the image.
+    volumes:
+      - .:/app
+
+    # Keep the container running if it's a server (like the web app)
+    # For CLI or ingest scripts, `docker-compose run --rm` is better as it cleans up.
+    # If the default CMD is `python main.py` (CLI), this tty might be useful for interactive input.
+    tty: true # Keeps stdin open for interactive CLI
+    stdin_open: true # Keeps stdin open
+
+# Example of a dedicated service for the web app, if you prefer not to override 'agent'
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: auhdhd_rag_agent_image # Can use the same image
+#     env_file:
+#       - .env
+#     ports:
+#       - "8080:8080"
+#     command: python app.py # Overrides the Dockerfile's CMD
+#     volumes:
+#       - .:/app

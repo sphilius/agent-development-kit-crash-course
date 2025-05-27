@@ -1,0 +1,5 @@
+The quick brown fox jumps over the lazy dog.
+Artificial intelligence is a rapidly evolving field.
+The RAG model combines retrieval with generation for enhanced AI responses.
+AuDHD individuals may benefit from clear, structured information.
+This is a sample document for the knowledge base.
