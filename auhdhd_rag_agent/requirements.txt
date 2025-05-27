@@ -1,0 +1,9 @@
+google-adk[database]==0.3.0
+litellm==1.66.3
+python-dotenv==1.1.0
+openai==1.37.0 # OpenAI client for embeddings
+pinecone-client==4.2.0 # Pinecone client for vector database
+langchain==0.2.11 # Still useful for text splitting, and can integrate with Pinecone
+langchain-openai==0.1.17 # Langchain integration for OpenAI
+langchain-pinecone==0.1.2 # Langchain integration for Pinecone
+ipykernel
